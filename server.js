@@ -1,5 +1,6 @@
 //DEPENDENCIES
-const express = require('express')
+const express = require('express');
+const methodOverride = require('method-override');
 
 // CONFIGURATION
 require('dotenv').config()
@@ -8,6 +9,8 @@ const app = express();
 
 //MIDDLEWARE
 app.use(express.static('public'));
+app.use(express.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 
 // ROUTES
 app.get('/', (req, res) => {
