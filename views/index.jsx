@@ -8,8 +8,8 @@ function Index (props) {
             <h2>Index Page</h2>
             <ul>
                 {
-                    breads.map((bread, index) => {
-                        return <li key={index}><a href={`/breads/${index}`}>{bread.name}</a></li>
+                    breads.map((bread) => {
+                        return <li key={bread.id}><a href={`/breads/${bread.id}`}>{bread.name}</a></li>
                     })
                 }
             </ul>
