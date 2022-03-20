@@ -10,7 +10,8 @@ const breadSchema = new Schema({
   image: { type: String, default: 'http://placehold.it/500x500.png' },
   baker: {
     type: String,
-    enum: ['Rachel', 'Monica', 'Joey','Chandler', 'Ross', 'Phoebe']
+    enum: ['Rachel', 'Monica', 'Joey','Chandler', 'Ross', 'Phoebe'],
+    default: 'Rachel'
   }
 })
 
@@ -18,6 +19,9 @@ const breadSchema = new Schema({
 breadSchema.methods.getBakedBy = function () {
   return `${this.name} was baked with love by ${this.baker}`
 }
+
+//static method bonus
+breadSchema.static('findBreadsByBaker', function(baker) { return this.find({ baker }); });
 
 //model and export
 const Bread = mongoose.model('Bread', breadSchema)

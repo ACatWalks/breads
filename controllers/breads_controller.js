@@ -88,8 +88,11 @@ breads.post('/', (req, res) => {
     } else {
       req.body.hasGluten = false
     }
-    Bread.create(req.body)
-    res.redirect('/breads')
+    Bread.create(req.body).then(() => {
+        res.redirect('/breads')
+    }).catch(err => {
+        res.send(err);
+    })
   })
 
 //DELETE

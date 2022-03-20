@@ -9,7 +9,12 @@ function Index (props) {
             <ul>
                 {
                     breads.map((bread) => {
-                        return <li key={bread.id}><a href={`/breads/${bread.id}`}>{bread.name}</a></li>
+                        return (
+                        <ul>
+                        <li key={bread.id}><a href={`/breads/${bread.id}`}>{bread.name}</a></li>
+                        <li>{bread.getBakedBy()}</li>
+                        </ul>
+                        )
                     })
                 }
             </ul>
