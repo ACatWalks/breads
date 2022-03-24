@@ -1,18 +1,17 @@
 const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js');
+const Baker = require('../models/baker.js');
 
 // INDEX
-breads.get('/', (req, res) => {
-    Bread.find().then(foundBreads => {
-        res.render('index', {breads: foundBreads, title: 'Index Page'})
-    })
-    
-})
-
-//NEW
-breads.get('/new', (req, res) => {
-    res.render('new');
+breads.get('/', async (req, res) => {
+    const foundBakers = await Baker.find().lean()
+    const foundBreads = await Bread.find().lean()
+    res.render('index', {
+        breads: foundBreads,
+        bakers: foundBakers,
+        title: 'Index Page'
+    }) 
 })
 
 //SEED
@@ -43,6 +42,15 @@ breads.get('/data/seed', (req, res) => {
       })
 })
 
+//NEW
+breads.get('/new', (req, res) => {
+    Baker.find().then(foundBakers => {
+        res.render('new', {
+            bakers: foundBakers
+        })
+    })
+})
+
 //UPDATE
 breads.put('/:id', (req, res) => {
     if(req.body.hasGluten === 'on'){
@@ -59,9 +67,8 @@ breads.put('/:id', (req, res) => {
 
 //SHOW
 breads.get('/:id', (req, res) => {
-    Bread.findById(req.params.id).then(foundBread => {
-        const bakedBy = foundBread.getBakedBy()
-        console.log(bakedBy)
+    Bread.findById(req.params.id).populate('baker').then(foundBread => {
+        const bakedBy = foundBread.getBakedBy();
         res.render('show', {bread: foundBread})
     }).catch(err => {
         res.send('404');
@@ -71,9 +78,12 @@ breads.get('/:id', (req, res) => {
 
 //EDIT
 breads.get('/:id/edit', (req, res) => {
-    Bread.findById(req.params.id).then(foundBread => {
-        res.render('edit', {
-            bread: foundBread
+    Baker.find().then(foundBakers => {
+        Bread.findById(req.params.id).then(foundBread => {
+            res.render('edit', {
+                bread: foundBread,
+                bakers: foundBakers
+            })
         })
     })
 })

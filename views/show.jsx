@@ -1,7 +1,7 @@
 const React = require('react');
 const Default = require('./layouts/Default');
 
-function Show({ bread, id }) {
+function Show({ bread, baker }) {
     return (
         <Default>
             <h3>{bread.name}</h3>

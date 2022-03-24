@@ -1,18 +1,28 @@
 const React = require('react');
 const Default = require('./layouts/Default');
 
-function Index (props) {
-    const breads = props.breads;
+function Index ({breads, bakers, title}) {
+    //const breads = props.breads;
     return (
-        <Default title ={props.title}>
+        <Default title ={title}>
             <h2>Index Page</h2>
+            <h3>Bakers</h3>
+            <ul>
+                {bakers.map(baker => {
+                    return (
+                        <li key={baker._id}>
+                            <a href={`/bakers/${baker._id}`}>{baker.name}</a>
+                        </li>
+                    )
+                })}
+            </ul>
+            <h3>Breads</h3>
             <ul>
                 {
                     breads.map((bread) => {
                         return (
                         <ul>
-                        <li key={bread.id}><a href={`/breads/${bread.id}`}>{bread.name}</a></li>
-                        <li>{bread.getBakedBy()}</li>
+                        <li key={bread._id}><a href={`/breads/${bread._id}`}>{bread.name}</a></li>
                         </ul>
                         )
                     })
