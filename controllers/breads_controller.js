@@ -91,7 +91,7 @@ breads.get('/:id/edit', (req, res) => {
 //CREATE
 breads.post('/', (req, res) => {
     if (!req.body.image) {
-      req.body.image = undefined;
+      req.body.image = 'http://placehold.it/500x500.png';
     }
     if(req.body.hasGluten === 'on') {
       req.body.hasGluten = true
