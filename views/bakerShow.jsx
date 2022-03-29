@@ -17,7 +17,7 @@ function BakerShow({baker}) {
                     )
                 })}
             </ul>
-            <form method={`/bakers/${baker.id}?_method=DELETE`} action='POST'>
+            <form action={`/bakers/${baker.id}?_method=DELETE`} method='POST'>
                 <input type='submit' value='DELETE' />
             </form>
         </Default>
